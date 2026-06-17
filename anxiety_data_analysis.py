@@ -18,7 +18,7 @@ GRID    = "#E0E0E0"
 
 try:
    #load file
-    file_name = "clean.csv"
+    file_name = "data/cleaned_data.csv"
     filepath = os.path.join(file_name)
     clean_df = pd.read_csv(filepath)
     print("File loaded successfully!")
@@ -76,7 +76,7 @@ try:
     plt.show()
 
 
-    to_filepath = os.path.join("Anxiety_Data.csv")
+    to_filepath = os.path.join("data/Anxiety_Data.csv")
     anx_df.to_csv(to_filepath, index = False)
 
 except FileNotFoundError as e:
