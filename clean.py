@@ -3,11 +3,13 @@ Outputs: cleaned_data.csv
 """
 
 import pandas as pd
+import os
 
 
+os.makedirs("data", exist_ok=True)
 
 # Step 1: Load the dataset
-df = pd.read_csv("ai_student_impact_dataset (1).csv")
+df = pd.read_csv("data/ai_student_impact_dataset (1).csv")
 
 print("=" * 60)
 print("Step 1: Raw data overview")
@@ -81,5 +83,5 @@ print(f"\nFinal dataset shape: {df.shape[0]} rows x {df.shape[1]} columns")
 
 # Step 3: Save cleaned data for everyone to use
 
-df.to_csv("cleaned_data.csv", index=False)
+df.to_csv("data/cleaned_data.csv", index=False)
 print("\nSaved to cleaned_data.csv")
