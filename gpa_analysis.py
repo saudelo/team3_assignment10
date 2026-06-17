@@ -5,10 +5,13 @@ Question: How does AI usage correlate with GPA change?
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
+import os
+
+
+os.makedirs("graphs", exist_ok=True)
 
 # Load the cleaned dataset
-
-df = pd.read_csv("cleaned_data.csv")
+df = pd.read_csv("data/cleaned_data.csv")
 
 # Step 1: Process and analyze
 
@@ -90,7 +93,7 @@ ax.set_xlabel("Weekly AI Usage (hours)", fontsize=11)
 ax.set_ylabel("Average GPA Change", fontsize=11)
 ax.tick_params(axis="x", rotation=15)
 plt.tight_layout()
-plt.savefig("chart1_avg_gpa_change_by_usage.png", dpi=150)
+plt.savefig("graphs/chart1_avg_gpa_change_by_usage.png", dpi=150)
 plt.show()
 print("Saved: chart1_avg_gpa_change_by_usage.png")
 
@@ -109,7 +112,7 @@ ax.set_xlabel("GPA Change (After - Before)", fontsize=11)
 ax.set_ylabel("Number of Students", fontsize=11)
 ax.legend()
 plt.tight_layout()
-plt.savefig("chart2_gpa_change_distribution.png", dpi=150)
+plt.savefig("graphs/chart2_gpa_change_distribution.png", dpi=150)
 plt.show()
 print("Saved: chart2_gpa_change_distribution.png")
 
@@ -135,7 +138,7 @@ ax.set_ylabel("% of students who improved GPA", fontsize=11)
 ax.tick_params(axis="x", rotation=15)
 ax.legend()
 plt.tight_layout()
-plt.savefig("chart3_pct_improved_by_usage.png", dpi=150)
+plt.savefig("graphs/chart3_pct_improved_by_usage.png", dpi=150)
 plt.show()
 print("Saved: chart3_pct_improved_by_usage.png")
 
