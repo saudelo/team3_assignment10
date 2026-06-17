@@ -80,17 +80,64 @@ try:
     print(f"columns {c}") 
 
     #Major: Business
-    biz_mask = clean_df["Major_Category"].str.strip() == "Business"
-    biz_df= clean_df[biz_mask]
-    r,c = biz_df.shape
+    biz_mask = clean_df["Major_Category"].str.strip() == "Business" 
+    biz_df= clean_df[biz_mask]   
+    r,c = biz_df.shape  
     print(f"rows {r}")  
     print(f"columns {c}") 
 
 
 
+    #Ai usage in correlation to self-reported anxiety
+
+    #plot  Anxiety level during exams and institutional_Policy with amount of AI use
+
+    #Burnout risk    Burnout_Risk_Level Anxiety_Level_During_Exams  Post_Semester_GPA Institutional_Policy
+    #Weekly_GenAI_Hours Traditional_Study_Hours Perceived_AI_Dependency
+
+    anx_df =clean_df[["Weekly_GenAI_Hours","Traditional_Study_Hours", "Perceived_AI_Dependency","Burnout_Risk_Level","Anxiety_Level_During_Exams","Institutional_Policy"]].copy()
+    anx_df = anx_df.sort_values(by="Anxiety_Level_During_Exams", ascending=False) #More exploring
   
-    to_filepath = os.path.join("clean_data.csv")
-    #stem_df.to_csv(to_filepath, index = False)
+
+    print(anx_df[[
+    "Traditional_Study_Hours",
+    "Weekly_GenAI_Hours",
+    "Anxiety_Level_During_Exams"
+    ]].corr(numeric_only=True))
+
+
+    
+    print(anx_df[[
+    "Perceived_AI_Dependency",
+    "Weekly_GenAI_Hours",
+    "Anxiety_Level_During_Exams"
+    ]].corr(numeric_only=True))
+
+
+    
+    #"Weekly_GenAI_Hours"    #"Anxiety_Level_During_Exams"
+    fig,ax = plt.subplots()
+    m, c = np.polyfit(anx_df["Weekly_GenAI_Hours"], anx_df["Anxiety_Level_During_Exams"], deg=1)
+    x_line = np.linspace(anx_df["Weekly_GenAI_Hours"].min(), anx_df["Weekly_GenAI_Hours"].max(), 100)
+    ax.plot(x_line, m * x_line + c, color="red", linestyle="--", label="Trend")
+    ax.scatter(anx_df["Weekly_GenAI_Hours"], anx_df["Anxiety_Level_During_Exams"])
+    ax.set_title("AI Study Hours Effect on Anxiety Level During Exams")
+    ax.set_xlabel("Weekly_GenAI_Hours")
+    ax.set_ylabel("Anxiety_Level_During_Exams")
+    plt.show()
+
+    #"Institutional_Policy", ""Anxiety_Level_During_Exams"
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.hist(anx_df["Institutional_Policy"], bins=7, edgecolor="white")
+    ax.set_title("Sum of Anxiety_Level by Institutional Policy (Histogram)")
+    ax.set_xlabel("Institutional Policy")
+    ax.set_ylabel("Sum of Anxiety_Levels")
+    plt.tight_layout()
+    plt.show()
+
+
+    to_filepath = os.path.join("Anxiety_Data.csv")
+    anx_df.to_csv(to_filepath, index = False)
 
 except FileNotFoundError as e:
     print(e)
