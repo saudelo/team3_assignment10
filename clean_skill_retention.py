@@ -5,6 +5,7 @@ DATA_FILE = "ai_student_impact_dataset (1).csv"
 YEAR_OUTPUT = "skill_retention_by_year.csv"
 PRE_GPA_OUTPUT = "skill_retention_by_pre_gpa.csv"
 POST_GPA_OUTPUT = "skill_retention_by_post_gpa.csv"
+OUTPUT_FILE = "skill_retention_by_hours.csv"
 
 border_80 = "="*80+"\n"
 GPA_bins = [0, 1, 2, 3, 4]
@@ -12,17 +13,21 @@ GPA_labels = ["0-1", "1-2", "2-3", "3-4"]
 # pre_GPA_labels = ["pre: 0-1", "pre: 1-2", "pre: 2-3", "pre: 3-4"]
 # post_GPA_labels = ["post: 0-1", "post: 1-2", "post: 2-3", "post: 3-4"]
 hour_bins = [0, 5, 10, 15, 20, 25, 30, 35, 40]
-hour_labels = ["0-5", "5-10", "10-15", "15-20", "20-25", "25-30", "30-35", "35-40"]
+hour_labels = ["0-5", "05-10", "10-15", "15-20", "20-25", "25-30", "30-35", "35-40"]
 
 df = pd.read_csv(DATA_FILE)
 
 df["Weekly_hours_bracket"] = pd.cut(df["Weekly_GenAI_Hours"], bins=hour_bins, labels=hour_labels)
 df["Pre_Semester_GPA_bracket"] = pd.cut(df["Pre_Semester_GPA"], bins=GPA_bins, labels=GPA_labels)
 df["Post_Semester_GPA_bracket"] = pd.cut(df["Post_Semester_GPA"], bins=GPA_bins, labels=GPA_labels)
+df["GPA_diff"] = df["Pre_Semester_GPA"] - df["Post_Semester_GPA"].shift(fill_value=0)
 
 year_subset = df[["Year_of_Study", "Weekly_GenAI_Hours", "Skill_Retention_Score", "Weekly_hours_bracket"]]
 pre_GPA_subset = df[["Pre_Semester_GPA", "Pre_Semester_GPA_bracket", "Weekly_GenAI_Hours", "Skill_Retention_Score", "Weekly_hours_bracket"]]
 post_GPA_subset = df[["Post_Semester_GPA", "Post_Semester_GPA_bracket", "Weekly_GenAI_Hours", "Skill_Retention_Score", "Weekly_hours_bracket"]]
+subset = df[["Post_Semester_GPA_bracket", "Pre_Semester_GPA_bracket", "Skill_Retention_Score", "Weekly_hours_bracket", "GPA_diff", "Year_of_Study"]]
+
+
 
 print(df["Post_Semester_GPA"].max())
 print(df.info())
@@ -70,6 +75,12 @@ print(year_pivot)
 print(pre_GPA_pivot)
 print(post_GPA_pivot)
 
-year_pivot.to_csv(YEAR_OUTPUT)
-pre_GPA_pivot.to_csv(PRE_GPA_OUTPUT)
-post_GPA_pivot.to_csv(POST_GPA_OUTPUT)
+# year_pivot.to_csv(YEAR_OUTPUT)
+# pre_GPA_pivot.to_csv(PRE_GPA_OUTPUT)
+# post_GPA_pivot.to_csv(POST_GPA_OUTPUT)
+
+# year_subset.to_csv(YEAR_OUTPUT)
+# pre_GPA_subset.to_csv(PRE_GPA_OUTPUT)
+# post_GPA_subset.to_csv(POST_GPA_OUTPUT)
+
+subset.to_csv(OUTPUT_FILE)
