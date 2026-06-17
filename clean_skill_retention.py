@@ -2,10 +2,11 @@ import numpy as np
 import pandas as pd
 
 DATA_FILE = "ai_student_impact_dataset (1).csv"
+OUTPUT_FILE = "skill_retention_by_hours.csv"
+
 YEAR_OUTPUT = "skill_retention_by_year.csv"
 PRE_GPA_OUTPUT = "skill_retention_by_pre_gpa.csv"
 POST_GPA_OUTPUT = "skill_retention_by_post_gpa.csv"
-OUTPUT_FILE = "skill_retention_by_hours.csv"
 
 border_80 = "="*80+"\n"
 GPA_bins = [0, 1, 2, 3, 4]
@@ -78,9 +79,5 @@ print(post_GPA_pivot)
 # year_pivot.to_csv(YEAR_OUTPUT)
 # pre_GPA_pivot.to_csv(PRE_GPA_OUTPUT)
 # post_GPA_pivot.to_csv(POST_GPA_OUTPUT)
-
-# year_subset.to_csv(YEAR_OUTPUT)
-# pre_GPA_subset.to_csv(PRE_GPA_OUTPUT)
-# post_GPA_subset.to_csv(POST_GPA_OUTPUT)
 
 subset.to_csv(OUTPUT_FILE)
