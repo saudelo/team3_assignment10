@@ -64,6 +64,8 @@ try:
     ax.set_title("AI Study Hours Effect on Anxiety Level During Exams")
     ax.set_xlabel("Weekly_GenAI_Hours")
     ax.set_ylabel("Anxiety_Level_During_Exams")
+    plot_filepath1 = os.path.join("graphs/anxiety_data_ai_hours.png")
+    plt.savefig(plot_filepath1, dpi=150, bbox_inches="tight")
     plt.show()
 
     #"Institutional_Policy", ""Anxiety_Level_During_Exams"
@@ -73,11 +75,14 @@ try:
     ax.set_xlabel("Institutional Policy")
     ax.set_ylabel("Sum of Anxiety_Levels")
     plt.tight_layout()
+    plot_filepath2 = os.path.join("graphs/anxiety_institutional_policy.png")
+    plt.savefig(plot_filepath2, dpi=150, bbox_inches="tight")
     plt.show()
-
-
-    to_filepath = os.path.join("data/Anxiety_Data.csv")
+    
+    to_filepath = os.path.join("data/anxiety_data.csv")
     anx_df.to_csv(to_filepath, index = False)
+
+    plt.close()
 
 except FileNotFoundError as e:
     print(e)
