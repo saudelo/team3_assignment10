@@ -27,8 +27,8 @@ year_pivot = df.pivot_table(
 
 post_GPA_pivot = df.pivot_table(
     values="Skill_Retention_Score",
-    index="Weekly_hours_bracket",
-    columns="Post_Semester_GPA_bracket",
+    index="Post_Semester_GPA_bracket",
+    columns="Weekly_hours_bracket",
     aggfunc="mean",
     fill_value=0
 )
@@ -40,9 +40,9 @@ ax1.set_title("Year of Study")
 ax1.set_xlabel("Weekly Hours of Use")
 ax1.set_ylabel("Skill Retention Score")
 
-post_GPA_pivot.plot(kind="line", ax=ax2)
+post_GPA_pivot.plot(kind="bar", ax=ax2)
 ax2.set_title("GPA")
-ax2.set_xlabel("Weekly Hours of Use")
+ax2.set_xlabel("Post Semester GPA")
 ax2.set_ylabel("Skill Retention Score")
 
 plt.tight_layout()
